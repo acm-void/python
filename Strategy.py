@@ -73,7 +73,29 @@ def do_turn(game):
 
     if (game.getBall().getPosition().getX()):
         players = {game.getMyTeam().getPlayer(i).getX(): i for i in range(4)}
-        ideal_players = {(k if k < game.getBall().getPosition().getX()) : v for k,v in players}
+        ideal_players = {}
+        for k, v in players:
+            if k < game.getBall().getPosition().getX():
+                ideal_players[k] = v  # ideal player would be a player with x lower than the ball !
+
+        if( len(ideal_players) ):  # if there were any ideal_player
+            ideal_players = sorted(ideal_players)
+            angle = get_angle( # get angle between nearest ideal_player and ball
+                [
+                    game.getMyTeam().getPlayer(ideal_players[0]).getX(),
+                    game.getMyTeam().getPlayer(ideal_players[0]).getY()
+                ],
+                [
+                    game.getBall().getX(),
+                    game.getBall().getY()
+                 ]
+            )
+            act.setPlayerID(ideal_players[0])  # select nearest ideal_player
+            act.setPower(100)  # :|
+            act.setAngle(angle)  # :|
+        else:
+            pass  # TODO : write sth to : defend when we have no ideal_player
+
 
     else:
         pass  # TODO : add offensive strategy
