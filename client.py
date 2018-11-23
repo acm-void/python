@@ -57,8 +57,8 @@ class Player:
         self.__pos = first_pos
 
     def __get_next_id(self):
-        id_ = self.__NEXT_ID
-        self.__NEXT_ID += 1
+        id_ = Player.__NEXT_ID % 5
+        Player.__NEXT_ID += 1
         return id_
 
     @property

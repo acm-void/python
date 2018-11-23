@@ -109,5 +109,5 @@ class Game:
 if __name__ == "__main__":
     game = Game('127.0.0.1', 9595)
     game.connect_to_server()
-    game.start('Sepahan') #Write your team name here
+    game.start('Void') #Write your team name here
 

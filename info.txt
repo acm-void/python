@@ -1,5 +1,0 @@
-Gate = -1.4 -> 1.4 ==> -7,0
-player radian = 1 !
-ball radian = 0.5 !
-
-x > -0.5 ---> at first !
