@@ -48,22 +48,27 @@ def do_turn(game):
     act = Triple()
 
     if (game.getBall().getPosition().getX() >= 0):
-        id = random.randint(0, 4)
-        act.setPlayerID(id)
-        act.setAngle(
-            get_angle(
+        ideal_plyers = {game.getMyTeam().getPlayer(i).getPosition().getX(): i
+                        for i in range(5)
+                        if game.getMyTeam().getPlayer(i).getPosition().getX() < game.getBall().getPosition().getX()}
+        if(ideal_plyers):
+            ideal_plyers = sorted(ideal_plyers.items(), key=lambda kv: kv[1])
+            angle = get_angle(
                 [
-                    game.getMyTeam().getPlayer(id).getPosition().getX(),
-                    game.getMyTeam().getPlayer(id).getPosition().getY()
+                    game.getMyTeam().getPlayer(ideal_plyers[0][1]).getPosition().getX(),
+                    game.getMyTeam().getPlayer(ideal_plyers[0][1]).getPosition().getY()
                 ],
                 [
                     game.getBall().getPosition().getX(),
                     game.getBall().getPosition().getY()
                 ]
             )
-        )
-        act.setPower(100)
-        return act
+            act.setPlayerID(ideal_plyers[0][1])
+            act.setAngle(angle)
+            act.setPower(100)
+            return act
+        else:
+              pass
     else:
         ideal_plyers = {game.getMyTeam().getPlayer(i).getPosition().getX(): i
                         for i in range(5)
@@ -73,15 +78,19 @@ def do_turn(game):
             print(ideal_plyers)
             angle = get_angle(
                 [
-                    game.getMyTeam().getPlayer(ideal_plyers[0][1] - 1).getPosition().getX(),
-                    game.getMyTeam().getPlayer(ideal_plyers[0][1] - 1).getPosition().getY()
+                    game.getMyTeam().getPlayer(ideal_plyers[0][1]).getPosition().getX(),
+                    game.getMyTeam().getPlayer(ideal_plyers[0][1]).getPosition().getY()
                 ],
                 [
                     game.getBall().getPosition().getX(),
                     game.getBall().getPosition().getY()
                 ]
             )
-            act.setPlayerID(ideal_plyers[0][1] - 1)
+            act.setPlayerID(ideal_plyers[0][1])
             act.setAngle(angle)
             act.setPower(100)
             return act
+        else:
+            #What the fuck shoudl we do
+            pass
+                  
