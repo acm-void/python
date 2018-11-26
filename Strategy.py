@@ -38,6 +38,11 @@ def init_players():
                Player(name="player_5", first_pos=Pos(-6, 1))]
     return players
 
+#calculate the distance for attacking
+def calculate_distance(x1, x2, y1, y2):
+    distance = math.sqrt(math.pow((x2 - x1), 2) + math.pow((y2 - y1), 2))
+    return distance
+
 
 def do_turn(game):
     act = Triple()
