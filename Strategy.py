@@ -1,96 +1,76 @@
 import math
-import random
-# import VoidTool
-
+from collections import namedtuple
+from operator import attrgetter
+from Void import Tool as Void
 from client import *
 
 
-def get_angle(input1, input2):
-    x1 = input1[0]
-    x2 = input2[0]
-
-    y1 = input1[1]
-    y2 = input2[1]
-
-    angle = math.fabs(math.degrees(math.atan((y2 - y1) / (x2 - x1))))
-    # Calculate the angle from the chosen player to the ball
-    if x2 > x1:
-        if y2 < y1:
-            angle = 360 - angle
-    else:
-        if y2 < y1:
-            angle += 180
-        else:
-            angle = 180 - angle
-    return angle
-
-
 def init_players():
-    '''
-    Here you can set each of your player's name and your team formation.
-    In case of setting wrong position, server will set default formation for your team.
-    '''
-
-    players = [Player(name="player_1", first_pos=Pos(-1, 0)),
-               Player(name="player_2", first_pos=Pos(-3, -2.5)),
-               Player(name="player_3", first_pos=Pos(-3, 2.5)),
-               Player(name="player_4", first_pos=Pos(-6, -1)),
-               Player(name="player_5", first_pos=Pos(-6, 1))]
+    players = [
+        Player(name="player_1", first_pos=Pos(-1, 0)),
+        Player(name="player_2", first_pos=Pos(-3, -2.5)),
+        Player(name="player_3", first_pos=Pos(-3, 2.5)),
+        Player(name="player_4", first_pos=Pos(-6, -1)),
+        Player(name="player_5", first_pos=Pos(-6, 1))
+    ]
     return players
-
-#calculate the distance for attacking
-def calculate_distance(x1, x2, y1, y2):
-    distance = math.sqrt(math.pow((x2 - x1), 2) + math.pow((y2 - y1), 2))
-    return distance
 
 
 def do_turn(game):
     act = Triple()
 
-    if (game.getBall().getPosition().getX() >= 0):
-        ideal_plyers = {game.getMyTeam().getPlayer(i).getPosition().getX(): i
-                        for i in range(5)
-                        if game.getMyTeam().getPlayer(i).getPosition().getX() < game.getBall().getPosition().getX()}
-        if(ideal_plyers):
-            ideal_plyers = sorted(ideal_plyers.items(), key=lambda kv: kv[1])
-            angle = get_angle(
-                [
-                    game.getMyTeam().getPlayer(ideal_plyers[0][1]).getPosition().getX(),
-                    game.getMyTeam().getPlayer(ideal_plyers[0][1]).getPosition().getY()
-                ],
-                [
-                    game.getBall().getPosition().getX(),
-                    game.getBall().getPosition().getY()
-                ]
+    Player = namedtuple("Player", ["x", "y", "id"])
+    Ball = namedtuple("Ball", ["x", "y"])
+
+    ball = Ball(game.getBall().getPosition().getX(), game.getBall().getPosition().getY())
+    players = []
+    for i in range(5):
+        players.append(
+            Player(
+                game.getMyTeam().getPlayer(i).getPosition().getX(),
+                game.getMyTeam().getPlayer(i).getPosition().getY(),
+                i
             )
-            act.setPlayerID(ideal_plyers[0][1])
-            act.setAngle(angle)
+        )
+
+    void = Void(players=players, ball=ball)
+
+    if void.is_defensive_sit():
+        ideal_players = [i for i in void.players if i.x < void.ball.x]
+
+        if ideal_players:
+            ideal_players = sorted(ideal_players, reverse=True, key=attrgetter('x'))
+            print("defensive system Phase #1 :\n" + str(ideal_players))
+            act.setPlayerID(ideal_players[0].id)
             act.setPower(100)
+            act.setAngle(void.get_angle([ideal_players[0].x, ideal_players[0].y], [void.ball.x, void.ball.y]))
+
             return act
         else:
-              pass
+            ideal_players = [i for i in void.players if math.sqrt(i.y ** 2) > void.ball.y]
+            ideal_players = sorted(ideal_players, key=lambda x: math.sqrt(x.y ** 2)) # |Y|
+            print("defensive system Phase #2 :\n" + str(ideal_players))
+            act.setPlayerID(ideal_players[0].id)
+            act.setPower(100)
+            act.setAngle(void.get_angle([ideal_players[0].x, ideal_players[0].y], [void.ball.x, void.ball.y]))
+            return act
+
+    elif void.is_offensive_sit() :
+        player = void.is_offensive_sit()
+        print("offensive system :\n" + str(players))
+        act.setAngle(void.get_angle([player.x, player.y], [void.ball.x, void.ball.y]))
+        act.setPower(100)
+        act.setPlayerID(player.id)
+        return act
+
     else:
-        ideal_plyers = {game.getMyTeam().getPlayer(i).getPosition().getX(): i
-                        for i in range(5)
-                        if game.getMyTeam().getPlayer(i).getPosition().getX() < game.getBall().getPosition().getX()}
-        if(ideal_plyers):
-            ideal_plyers = sorted(ideal_plyers.items(), key=lambda kv: kv[1])
-            print(ideal_plyers)
-            angle = get_angle(
-                [
-                    game.getMyTeam().getPlayer(ideal_plyers[0][1]).getPosition().getX(),
-                    game.getMyTeam().getPlayer(ideal_plyers[0][1]).getPosition().getY()
-                ],
-                [
-                    game.getBall().getPosition().getX(),
-                    game.getBall().getPosition().getY()
-                ]
-            )
-            act.setPlayerID(ideal_plyers[0][1])
-            act.setAngle(angle)
-            act.setPower(100)
-            return act
-        else:
-            #What the fuck shoudl we do
-            pass
-                  
+        players = sorted(void.players, reverse=True, key=lambda x: x.x)
+        print("default system : \n" + str(players))
+        act.setAngle(void.get_angle([players[0].x, players[0].y], [void.ball.x, void.ball.y]))
+        act.setPower(100)
+        act.setPlayerID(players[0].id)
+
+        return act
+
+
+
