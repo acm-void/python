@@ -7,11 +7,11 @@ from client import *
 
 def init_players():
     players = [
-        Player(name="player_1", first_pos=Pos(-1, 0)),
-        Player(name="player_2", first_pos=Pos(-3, -2.5)),
-        Player(name="player_3", first_pos=Pos(-3, 2.5)),
-        Player(name="player_4", first_pos=Pos(-6, -1)),
-        Player(name="player_5", first_pos=Pos(-6, 1))
+        Player(name="Isco", first_pos=Pos(-1, 0)),
+        Player(name="Zidane", first_pos=Pos(-3, -2.5)),
+        Player(name="Raul", first_pos=Pos(-3, 2.5)),
+        Player(name="Modric", first_pos=Pos(-6, -1)),
+        Player(name="Casillas", first_pos=Pos(-6, 1))
     ]
     return players
 
