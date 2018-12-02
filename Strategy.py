@@ -48,6 +48,8 @@ def do_turn(game):
             return act
         else:
             ideal_players = [i for i in void.players if math.sqrt(i.y ** 2) > void.ball.y]
+            if not ideal_players :
+                ideal_players.append(void.players[1])
             ideal_players = sorted(ideal_players, key=lambda x: math.sqrt(x.y ** 2)) # |Y|
             print("defensive system Phase #2 :\n" + str(ideal_players))
             act.setPlayerID(ideal_players[0].id)
