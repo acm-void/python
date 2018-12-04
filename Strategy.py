@@ -1,3 +1,4 @@
+import random
 import math
 from collections import namedtuple
 from operator import attrgetter
@@ -10,8 +11,8 @@ def init_players():
         Player(name="Isco", first_pos=Pos(-1, 0)),
         Player(name="Zidane", first_pos=Pos(-3, -2.5)),
         Player(name="Raul", first_pos=Pos(-3, 2.5)),
-        Player(name="Modric", first_pos=Pos(-6, -1)),
-        Player(name="Casillas", first_pos=Pos(-6, 1))
+        Player(name="Modric", first_pos=Pos(-6, -0.7)),
+        Player(name="Casillas", first_pos=Pos(-6, 0.7))
     ]
     return players
 
@@ -36,33 +37,34 @@ def do_turn(game):
     void = Void(players=players, ball=ball)
 
     if void.is_defensive_sit():
-        ideal_players = [i for i in void.players if i.x < void.ball.x]
+        ideal_players = [i for i in void.players if math.sqrt(i.y ** 2) > void.ball.y]
 
         if ideal_players:
             ideal_players = sorted(ideal_players, reverse=True, key=attrgetter('x'))
             print("defensive system Phase #1 :\n" + str(ideal_players))
             act.setPlayerID(ideal_players[0].id)
-            act.setPower(100)
-            act.setAngle(void.get_angle([ideal_players[0].x, ideal_players[0].y], [void.ball.x, void.ball.y]))
+            act.setPower(void.calculate_distance(ideal_players[0].x, void.ball.x - 1, ideal_players[0].y, void.ball.y) * 10)
+            act.setAngle(void.get_angle([ideal_players[0].x, ideal_players[0].y], [void.ball.x - 1, void.ball.y]))
 
             return act
         else:
-            ideal_players = [i for i in void.players if math.sqrt(i.y ** 2) > void.ball.y]
+            ideal_players = [i for i in void.players if i.x < void.ball.x]
             if not ideal_players :
-                ideal_players.append(void.players[1])
-            ideal_players = sorted(ideal_players, key=lambda x: math.sqrt(x.y ** 2)) # |Y|
+                ideal_players.append(void.players[random.randint(0, 4)])
+            ideal_players = sorted(ideal_players, key=lambda x: math.sqrt(x.y ** 2))  # |Y|
             print("defensive system Phase #2 :\n" + str(ideal_players))
             act.setPlayerID(ideal_players[0].id)
-            act.setPower(100)
-            act.setAngle(void.get_angle([ideal_players[0].x, ideal_players[0].y], [void.ball.x, void.ball.y]))
+            act.setPower(void.calculate_distance(ideal_players[0].x, void.ball.x - 1.5, ideal_players[0].y, void.ball.y) * 10)
+            act.setAngle(void.get_angle([ideal_players[0].x, ideal_players[0].y], [void.ball.x - 1.5, void.ball.y]))
             return act
 
-    elif void.is_offensive_sit() :
-        player = void.is_offensive_sit()
+    elif void.is_offensive_sit():
+        players = void.is_offensive_sit()
+        players = sorted(players, reverse=True, key=lambda x: x.x)
         print("offensive system :\n" + str(players))
-        act.setAngle(void.get_angle([player.x, player.y], [void.ball.x, void.ball.y]))
+        act.setAngle(void.get_angle([players[0].x, players[0].y], [void.ball.x, void.ball.y]))
         act.setPower(100)
-        act.setPlayerID(player.id)
+        act.setPlayerID(players[0].id)
         return act
 
     else:

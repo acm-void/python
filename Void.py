@@ -9,6 +9,29 @@ class Tool(object):
         self.ball = ball
 
     @staticmethod
+    def angle(input1, input2):
+
+        x1 = input1[0]
+        x2 = input2[0]
+
+        y1 = input1[1]
+        y2 = input2[1]
+
+        angle = math.fabs(math.degrees(math.atan((y2 - y1) / (x2 - x1))))
+        # Calculate the angle from the chosen player to the ball
+        if x2 > x1:
+            if y2 < y1:
+                angle = 360 - angle
+        else:
+            if y2 < y1:
+                angle += 180
+            else:
+                angle = 180 - angle
+        if y2 < y1:
+            angle = angle - 360
+        return angle
+
+    @staticmethod
     def get_angle(input1, input2):
 
         x1 = input1[0]
@@ -43,7 +66,7 @@ class Tool(object):
             return False
 
     def is_offensive_sit(self):
-        ball_angle_up = self.get_angle(
+        ball_angle_up = self.angle(
             [
                 self.ball.x,
                 self.ball.y
@@ -53,7 +76,7 @@ class Tool(object):
                 1
             ]
         )
-        ball_angle_down = self.get_angle(
+        ball_angle_down = self.angle(
             [
                 self.ball.x,
                 self.ball.y
@@ -63,10 +86,14 @@ class Tool(object):
                 -1
             ]
         )
-        for i in self.players :
-            if self.get_angle([i.x, i.y], [self.ball.x, self.ball.y]) in range(int(ball_angle_down), int(ball_angle_up)):
-                return i
-            else:
-                return False
-
-
+        ok = []
+        for i in self.players:
+            if int(self.angle([i.x, i.y], [self.ball.x, self.ball.y])) in range(int(ball_angle_down),
+                                                                                int(ball_angle_up)):
+                ok.append(i)
+        if ok:
+            ok.append(ball_angle_down)
+            ok.append(ball_angle_up)
+            return ok
+        else:
+            return False
