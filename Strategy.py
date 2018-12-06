@@ -37,24 +37,24 @@ def do_turn(game):
     void = Void(players=players, ball=ball)
 
     if void.is_defensive_sit():
-        ideal_players = [i for i in void.players if math.sqrt(i.y ** 2) > void.ball.y]
+        ideal_players = [i for i in void.players if i.x < void.ball.x]
 
         if ideal_players:
-            ideal_players = sorted(ideal_players, reverse=True, key=lambda x: math.sqrt(x.y ** 2))
-            ideal_players = sorted(ideal_players[:2], reverse=True,
+            ideal_players = sorted(ideal_players, reverse=False,
                                    key=lambda x: void.calculate_distance(x.x, void.ball.x, x.y, void.ball.y))
+
             print("defensive system Phase #1 :\n" + str(ideal_players))
             act.setPlayerID(ideal_players[0].id)
             act.setPower(
-                void.calculate_distance(ideal_players[0].x, void.ball.x - 0.5, ideal_players[0].y, void.ball.y) * 10)
-            act.setAngle(void.get_angle([ideal_players[0].x, ideal_players[0].y], [void.ball.x - 0.5, void.ball.y]))
+                void.calculate_distance(ideal_players[0].x, void.ball.x - 1, ideal_players[0].y, void.ball.y) * 11)
+            act.setAngle(void.get_angle([ideal_players[0].x, ideal_players[0].y], [void.ball.x - 1, void.ball.y]))
 
             return act
         else:
-            ideal_players = [i for i in void.players if i.x < void.ball.x]
-            if not ideal_players:
-                ideal_players.append(void.players[random.randint(0, 4)])
-            ideal_players = sorted(ideal_players, key=lambda x: math.sqrt(x.y ** 2))  # |Y|
+            ideal_players = [i for i in void.players]
+            ideal_players = sorted(ideal_players, reverse=True, key=lambda x: math.sqrt(x.y ** 2))  # |Y|
+            ideal_players = sorted(ideal_players[:2], reverse=False,
+                                   key=lambda x: void.calculate_distance(x.x, void.ball.x, x.y, void.ball.y))
             print("defensive system Phase #2 :\n" + str(ideal_players))
             act.setPlayerID(ideal_players[0].id)
             act.setPower(
@@ -72,12 +72,20 @@ def do_turn(game):
         return act
 
     else:
-        players = sorted(void.players, reverse=True, key=attrgetter('x'))
-        print("default system : \n" + str(players))
-        if players[0].y < void.ball.y:
-            act.setAngle(void.get_angle([players[0].x, players[0].y], [void.ball.x, void.ball.y - 1]))
+        players = [i for i in void.players if i.x < void.ball.x]
+        if players:
+            players = sorted(void.players, reverse=False, key=attrgetter('x'))
+            players = sorted(players, reverse=False,
+                             key=lambda x: void.calculate_distance(x.x, void.ball.x, x.y, void.ball.y))
+            print("default system : \n" + str(players))
+            if void.ball.y > 0:
+                act.setAngle(void.get_angle([players[0].x, players[0].y], [void.ball.x, void.ball.y + 0.3]))
+            else:
+                act.setAngle(void.get_angle([players[0].x, players[0].y], [void.ball.x, void.ball.y - 0.3]))
         else:
-            act.setAngle(void.get_angle([players[0].x, players[0].y], [void.ball.x, void.ball.y + 1]))
+            players = [i for i in void.players]
+            players = sorted(players, reverse=True, key=lambda x: math.sqrt(x.y ** 2))
+            act.setAngle(void.get_angle([players[0].x, players[0].y], [-6, -2 if players[0].y < 0 else 2]))
         act.setPower(100)
         act.setPlayerID(players[0].id)
 

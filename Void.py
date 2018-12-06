@@ -60,7 +60,8 @@ class Tool(object):
         return distance
 
     def is_defensive_sit(self):
-        if self.ball.x < 0:
+        defender = [i for i in self.players if i.x < self.ball.x and self.calculate_distance(i.x, self.ball.x, i.y, self.ball.y) < 1.3]
+        if self.calculate_distance(-7, self.ball.x, 0, self.ball.y) <= 5 and not len(defender):
             return True
         else:
             return False
