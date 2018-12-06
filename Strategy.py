@@ -73,8 +73,10 @@ def do_turn(game):
 
     else:
         players = [i for i in void.players if i.x < void.ball.x]
-        if players:
-            players = sorted(void.players, reverse=False, key=attrgetter('x'))
+        if void.is_first_shot(game=game):
+            act.setAngle(random.randint(-10, 10))
+        elif players:
+            players = sorted(void.players, reverse=False, key=lambda x: x.x)
             players = sorted(players, reverse=False,
                              key=lambda x: void.calculate_distance(x.x, void.ball.x, x.y, void.ball.y))
             print("default system : \n" + str(players))

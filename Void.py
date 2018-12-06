@@ -66,6 +66,14 @@ class Tool(object):
         else:
             return False
 
+    def is_first_shot(self, game):
+        for i in self.players :
+            if not i.x == game.getMyTeam().getPlayer().getFirstPosition().getX():
+                return False
+        return True
+
+
+
     def is_offensive_sit(self):
         ball_angle_up = self.angle(
             [
