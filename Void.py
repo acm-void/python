@@ -60,19 +60,19 @@ class Tool(object):
         return distance
 
     def is_defensive_sit(self):
-        defender = [i for i in self.players if i.x < self.ball.x and self.calculate_distance(i.x, self.ball.x, i.y, self.ball.y) < 1.3]
+        defender = [i for i in self.players if
+                    i.x < self.ball.x and self.calculate_distance(i.x, self.ball.x, i.y, self.ball.y) < 1.3]
         if self.calculate_distance(-7, self.ball.x, 0, self.ball.y) <= 5 and not len(defender):
             return True
         else:
             return False
 
     def is_first_shot(self, game):
-        for i in self.players :
-            if not i.x == game.getMyTeam().getPlayer().getFirstPosition().getX():
+        first = [-1, -3, -3, -6, -6]
+        for i in self.players:
+            if not i.x == first[i.id]:
                 return False
         return True
-
-
 
     def is_offensive_sit(self):
         ball_angle_up = self.angle(

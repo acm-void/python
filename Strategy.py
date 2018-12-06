@@ -75,6 +75,7 @@ def do_turn(game):
         players = [i for i in void.players if i.x < void.ball.x]
         if void.is_first_shot(game=game):
             act.setAngle(random.randint(-10, 10))
+            print("wow its first shot")
         elif players:
             players = sorted(void.players, reverse=False, key=lambda x: x.x)
             players = sorted(players, reverse=False,

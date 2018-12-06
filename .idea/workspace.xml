@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f0945391-5440-4736-b717-09ba4e2d11e2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Strategy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Strategy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Void.py" beforeDir="false" afterPath="$PROJECT_DIR$/Void.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -47,24 +46,24 @@
           <entry key="Python Console" value="1" />
           <entry key="dummy" value="4" />
           <entry key="gitignore" value="15" />
-          <entry key="py" value="5025" />
+          <entry key="py" value="5061" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="19" />
-          <entry key="Python" value="5026" />
+          <entry key="Python" value="5062" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Strategy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="74" column="64" lean-forward="true" selection-start-line="74" selection-start-column="64" selection-end-line="74" selection-end-column="64" />
+            <state relative-caret-position="230">
+              <caret line="64" column="64" selection-start-line="64" selection-start-column="64" selection-end-line="64" selection-end-column="64" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -72,14 +71,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Void.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="68" column="28" selection-start-line="68" selection-start-column="28" selection-end-line="68" selection-end-column="28" />
+            <state relative-caret-position="138">
+              <caret line="71" column="57" selection-start-line="71" selection-start-column="57" selection-end-line="71" selection-end-column="57" />
               <folding>
-                <marker date="1544082516305" expanded="true" signature="96:734" ph="..." />
-                <marker date="1544082516305" expanded="true" signature="1936:1964" ph="..." />
+                <marker date="1544082718831" expanded="true" signature="96:734" ph="..." />
+                <marker date="1544082718831" expanded="true" signature="1959:1985" ph="..." />
               </folding>
             </state>
           </provider>
@@ -117,8 +116,8 @@
         <option value="$PROJECT_DIR$/VoidTool.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/Game.py" />
-        <option value="$PROJECT_DIR$/Void.py" />
         <option value="$PROJECT_DIR$/Strategy.py" />
+        <option value="$PROJECT_DIR$/Void.py" />
       </list>
     </option>
   </component>
@@ -266,7 +265,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1549" height="837" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09498328" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -282,7 +280,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3275862" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.48563218" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.48563218" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32614943" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -321,17 +319,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Void.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="68" column="28" selection-start-line="68" selection-start-column="28" selection-end-line="68" selection-end-column="28" />
-          <folding>
-            <marker date="1544082516305" expanded="true" signature="96:734" ph="..." />
-            <marker date="1544082516305" expanded="true" signature="1936:1964" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Game.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="401">
@@ -341,10 +328,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Strategy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="74" column="64" lean-forward="true" selection-start-line="74" selection-start-column="64" selection-end-line="74" selection-end-column="64" />
+        <state relative-caret-position="230">
+          <caret line="64" column="64" selection-start-line="64" selection-start-column="64" selection-end-line="64" selection-end-column="64" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Void.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="71" column="57" selection-start-line="71" selection-start-column="57" selection-end-line="71" selection-end-column="57" />
+          <folding>
+            <marker date="1544082718831" expanded="true" signature="96:734" ph="..." />
+            <marker date="1544082718831" expanded="true" signature="1959:1985" ph="..." />
           </folding>
         </state>
       </provider>
