@@ -62,7 +62,7 @@ def do_turn(game):
             act.setAngle(void.get_angle([ideal_players[0].x, ideal_players[0].y], [void.ball.x - 1.5, void.ball.y]))
             return act
 
-    elif void.is_offensive_sit():
+    elif void.is_offensive_sit() and not void.is_first_shot(game):
         players = void.is_offensive_sit()
         players = sorted(players[0:-2], reverse=True, key=lambda x: x.x)
         print("offensive system :\n" + str(players))
